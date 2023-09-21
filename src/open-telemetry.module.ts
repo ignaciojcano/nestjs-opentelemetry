@@ -8,6 +8,7 @@ import { OpenTelemetryService } from './open-telemetry.service';
 import { getOTelSDKToken } from './open-telemetry.utils';
 import { TraceService } from './trace.service';
 import { MetricsService } from './metrics.service';
+import { OPEN_TELEMETRY_OPTIONS } from './open-telemetry.constants';
 
 @Module({
   providers: [
@@ -15,6 +16,11 @@ import { MetricsService } from './metrics.service';
       provide: getOTelSDKToken(),
       inject: [MODULE_OPTIONS_TOKEN],
       useFactory: (options: OpenTelemetryModuleOptions) => options.sdk,
+    },
+    {
+      provide: OPEN_TELEMETRY_OPTIONS,
+      inject: [MODULE_OPTIONS_TOKEN],
+      useFactory: (options: OpenTelemetryModuleOptions) => options,
     },
     OpenTelemetryService,
     TraceService,
