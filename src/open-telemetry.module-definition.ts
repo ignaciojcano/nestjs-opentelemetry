@@ -3,6 +3,7 @@ import { OpenTelemetryModuleOptions } from './interfaces/module-options.interfac
 
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
   new ConfigurableModuleBuilder<OpenTelemetryModuleOptions>()
+    .setClassMethodName('forRoot')
     .setExtras(
       {
         isGlobal: true,

@@ -3,15 +3,23 @@ import {
   ConfigurableModuleClass,
   MODULE_OPTIONS_TOKEN,
 } from './open-telemetry.module-definition';
+import { OpenTelemetryModuleOptions } from './interfaces/module-options.interface';
+import { OpenTelemetryService } from './open-telemetry.service';
+import { getOTelSDKToken } from './open-telemetry.utils';
+import { TraceService } from './trace.service';
+import { MetricsService } from './metrics.service';
 
 @Module({
   providers: [
-    // {
-    //   provide: getAnalyticsToken(),
-    //   inject: [MODULE_OPTIONS_TOKEN],
-    //   useFactory: (options: AnalyticsSettings) => new Analytics(options),
-    // },
+    {
+      provide: getOTelSDKToken(),
+      inject: [MODULE_OPTIONS_TOKEN],
+      useFactory: (options: OpenTelemetryModuleOptions) => options.sdk,
+    },
+    OpenTelemetryService,
+    TraceService,
+    MetricsService,
   ],
-  exports: [],
+  exports: [OpenTelemetryService, TraceService, MetricsService],
 })
-export class SegmentAnalyticsModule extends ConfigurableModuleClass {}
+export class OpenTelemetryModule extends ConfigurableModuleClass {}
