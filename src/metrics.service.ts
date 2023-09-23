@@ -23,6 +23,6 @@ export class MetricsService {
       version: this.options.defaultVersion,
     },
   ): Meter {
-    return metrics.getMeter(name, version, options);
+    return metrics.getMeterProvider().getMeter(name, version, options);
   }
 }
