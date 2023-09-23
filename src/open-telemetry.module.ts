@@ -5,10 +5,17 @@ import {
 } from './open-telemetry.module-definition';
 import { OpenTelemetryModuleOptions } from './interfaces/module-options.interface';
 import { OpenTelemetryService } from './open-telemetry.service';
-import { getOTelSDKToken } from './open-telemetry.utils';
-import { TraceService } from './trace.service';
-import { MetricsService } from './metrics.service';
-import { OPEN_TELEMETRY_OPTIONS } from './open-telemetry.constants';
+import {
+  getOTelMetricsService,
+  getOTelSDKToken,
+  getOTelTraceService,
+} from './open-telemetry.utils';
+import { metrics, trace } from '@opentelemetry/api';
+import {
+  OPEN_TELEMETRY_METRICS_API,
+  OPEN_TELEMETRY_SDK_INSTANCE,
+  OPEN_TELEMETRY_TRACE_API,
+} from './open-telemetry.constants';
 
 @Module({
   providers: [
@@ -18,14 +25,20 @@ import { OPEN_TELEMETRY_OPTIONS } from './open-telemetry.constants';
       useFactory: (options: OpenTelemetryModuleOptions) => options.sdk,
     },
     {
-      provide: OPEN_TELEMETRY_OPTIONS,
-      inject: [MODULE_OPTIONS_TOKEN],
-      useFactory: (options: OpenTelemetryModuleOptions) => options,
+      provide: getOTelMetricsService(),
+      useValue: metrics,
+    },
+    {
+      provide: getOTelTraceService(),
+      useValue: trace,
     },
     OpenTelemetryService,
-    TraceService,
-    MetricsService,
   ],
-  exports: [OpenTelemetryService, TraceService, MetricsService],
+  exports: [
+    OpenTelemetryService,
+    OPEN_TELEMETRY_TRACE_API,
+    OPEN_TELEMETRY_METRICS_API,
+    OPEN_TELEMETRY_SDK_INSTANCE,
+  ],
 })
 export class OpenTelemetryModule extends ConfigurableModuleClass {}
