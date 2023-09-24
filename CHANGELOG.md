@@ -1,5 +1,7 @@
 
 
+## [0.1.1](https://github.com/ignaciojcano/nestjs-opentelemetry/compare/0.1.0...0.1.1) (2023-09-24)
+
 ## 0.1.0 (2023-09-24)
 
 
