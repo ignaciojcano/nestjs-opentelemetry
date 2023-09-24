@@ -1,6 +1,6 @@
 {
   "name": "@icano/nestjs-opentelemetry",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "OpenTelemetry NestJS Module and Service",
   "author": "Ignacio Cano<code@nacho.sh>",
   "private": true,
